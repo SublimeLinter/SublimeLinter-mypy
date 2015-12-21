@@ -19,7 +19,7 @@ Before using this plugin, you must ensure that `mypy` is installed on your syste
    ```
 
 
-**Note:** This plugin requires `mypy` __version__ or later.
+**Note:** This plugin requires `mypy` 0.2.0 or later.
 
 ### Linter configuration
 In order for `mypy` to be executed by SublimeLinter, you must ensure that its path is available to SublimeLinter. Before going any further, please read and follow the steps in [“Finding a linter executable”](http://sublimelinter.readthedocs.org/en/latest/troubleshooting.html#finding-a-linter-executable) through “Validating your PATH” in the documentation.
