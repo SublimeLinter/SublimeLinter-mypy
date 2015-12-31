@@ -1,7 +1,7 @@
 SublimeLinter-contrib-mypy
 ================================
 
-[![Build Status](https://travis-ci.org/fredcallaway/SublimeLinter-contrib-mypy.svg?branch=master)](https://travis-ci.org/SublimeLinter/SublimeLinter-contrib-mypy)
+[![Build Status](https://travis-ci.org/fredcallaway/SublimeLinter-contrib-mypy.svg?branch=master)](https://travis-ci.org/fredcallaway/SublimeLinter-contrib-mypy)
 
 
 
