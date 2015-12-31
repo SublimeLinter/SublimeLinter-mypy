@@ -12,6 +12,7 @@
 
 from SublimeLinter.lint import PythonLinter, util, highlight
 
+
 class Mypy(PythonLinter):
     """Provides an interface to mypy."""
 
@@ -33,4 +34,3 @@ class Mypy(PythonLinter):
     inline_overrides = None
     comment_re = None
     check_version = False
-
