@@ -17,7 +17,7 @@ class Mypy(PythonLinter):
     """Provides an interface to mypy."""
 
     syntax = 'python'
-    cmd = 'mypy @'
+    cmd = 'mypy * @'
     version_args = '--version'
     version_re = r'(?P<version>\d+\.\d+\.\d+)'
     version_requirement = '>= 0.2'
