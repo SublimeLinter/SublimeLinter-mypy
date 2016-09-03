@@ -11,6 +11,7 @@
 """This module exports the Mypy plugin class."""
 
 from SublimeLinter.lint import PythonLinter, util, highlight
+import sublime
 
 
 class Mypy(PythonLinter):
@@ -34,3 +35,19 @@ class Mypy(PythonLinter):
     inline_overrides = None
     comment_re = None
     check_version = False
+
+    def run(self, cmd, code):
+        """Override ``run`` method to customize the executable ``cmd``."""
+
+        settings = self.get_view_settings()
+        custom_cmd = settings.get('cmd')
+        current_window = sublime.active_window()
+
+        if custom_cmd is not None and current_window is not None:
+            project_vars = current_window.extract_variables()
+
+            custom_cmd = sublime.expand_variables(
+                custom_cmd, project_vars)
+            cmd = self.insert_args([custom_cmd])
+
+        return super(Mypy, self).run(cmd, code)
