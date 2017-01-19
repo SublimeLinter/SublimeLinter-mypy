@@ -20,7 +20,7 @@ class Mypy(PythonLinter):
     syntax = 'python'
     cmd = 'mypy * @'
     version_args = '--version'
-    version_re = r'(?P<version>\d+\.\d+\.\d+)'
+    version_re = r'(?P<version>\d+\.\d+)'
     version_requirement = '>= 0.2'
     regex = r'^.+\.py:(?P<line>\d+): error: (?P<message>.+)'
     multiline = False
