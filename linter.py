@@ -22,7 +22,7 @@ class Mypy(PythonLinter):
     version_args = '--version'
     version_re = r'(?P<version>\d+\.\d+)'
     version_requirement = '>= 0.2'
-    regex = r'^.+\.py:(?P<line>\d+): error: (?P<message>.+)'
+    regex = r'^.+\.py:(?P<line>\d+): (?:error|warning|note): (?P<message>.+)'
     multiline = False
     line_col_base = (1, 1)
     tempfile_suffix = None
