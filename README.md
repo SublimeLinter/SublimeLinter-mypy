@@ -17,7 +17,7 @@ Before using this plugin, you must ensure that `mypy` is installed on your syste
 
 1. Install `mypy` by typing the following in a terminal:
    ```
-   [sudo] pip install mypy-lang
+   [sudo] pip install mypy
    ```
 
 
