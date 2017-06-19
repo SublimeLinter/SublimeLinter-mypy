@@ -18,12 +18,13 @@ class Mypy(PythonLinter):
     """Provides an interface to mypy."""
 
     syntax = 'python'
-    cmd = 'mypy * @'
+    cmd = 'mypy --follow-imports silent * @'
     version_args = '--version'
     version_re = r'(?P<version>\d+\.\d+)'
     version_requirement = '>= 0.2'
     regex = r'^.+\.py:(?P<line>\d+): (?:error|warning|note): (?P<message>.+)'
     multiline = False
+    template_suffix = '-'
     line_col_base = (1, 1)
     tempfile_suffix = None
     error_stream = util.STREAM_BOTH
