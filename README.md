@@ -21,7 +21,7 @@ Before using this plugin, you must ensure that `mypy` is installed on your syste
    ```
 
 
-**Note:** This plugin requires `mypy` 0.2.0 or later.
+**Note:** This plugin requires `mypy` 0.520 or later.
 
 ### Linter configuration
 In order for `mypy` to be executed by SublimeLinter, you must ensure that its path is available to SublimeLinter. Before going any further, please read and follow the steps in [“Finding a linter executable”](http://sublimelinter.readthedocs.org/en/latest/troubleshooting.html#finding-a-linter-executable) through “Validating your PATH” in the documentation.
@@ -40,6 +40,15 @@ To install via Package Control, do the following:
 ## Settings
 For general information on how SublimeLinter works with settings, please see [Settings][settings]. For information on generic linter settings, please see [Linter Settings][linter-settings].
 
+|Setting|Description|Inline Setting|Inline Override|
+|:------|:----------|:------------:|:-------------:|
+|disallow-any|A comma-separated list of the various types of Any in a module to disallow.|&#10003;|&#10003;|
+|strict-optional-whitelist|A comma-separated list of GLOBs for files to ignore strict optional checking.|&#10003;|&#10003;|
+|python-version|The Python version that mypy should use for its type stubs.|&#10003;| |
+|cache-dir|The directory to store the cache in. Creates a sub-folder in your temporary directory if not specified.| | |
+|config-file|Path to the config file to use. A file named `mypy.ini` is recognized automatically.| | |
+
+All other args to mypy should be specified in the `args` list, since they are just flags, rarely used or don't make sense to be recognized as an inline setting.
 
 ## Contributing
 If you would like to contribute enhancements or fixes, please do the following:
