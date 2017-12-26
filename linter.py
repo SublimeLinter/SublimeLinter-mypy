@@ -29,7 +29,6 @@ class Mypy(PythonLinter):
     """Provides an interface to mypy."""
 
     syntax = 'python'
-    executable = "mypy"
     version_args = '--version'
     version_re = r'(?P<version>\d+\.\d+(\.\d+)?)'
     version_requirement = '>= 0.520'
@@ -79,7 +78,7 @@ class Mypy(PythonLinter):
         """Return a list with the command line to execute."""
 
         cmd = [
-            self.executable_path,
+            'mypy',
             '*',
             '--follow-imports=silent',  # or 'skip'
             '--ignore-missing-imports',
@@ -140,19 +139,6 @@ class Mypy(PythonLinter):
                 # return os.path.dirname(self.filename)
             else:
                 return os.path.realpath('.')
-
-    def build_cmd(self, cmd=None):
-        """Fix internal SublimeLinter `build_cmd`.
-
-        PythonLinter doesn't play well with a callable cmd method,
-        so we override this method here.
-        """
-        if not cmd:
-            cmd = self.cmd
-        if callable(cmd):
-            cmd = cmd()
-
-        return self.insert_args(cmd)
 
 
 def _find_first_nonpackage_parent(file_path):
