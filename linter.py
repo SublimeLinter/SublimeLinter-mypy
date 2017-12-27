@@ -68,7 +68,7 @@ class Mypy(Linter):
     )
     # selectors = {}
     # word_re = None
-    # comment_re = r'\s*#'
+    comment_re = r'\s*#'
     check_version = True
 
     # Used to store TemporaryDirectory instances.
