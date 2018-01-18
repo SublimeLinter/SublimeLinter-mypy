@@ -15,7 +15,7 @@ import os
 import shutil
 import tempfile
 
-from SublimeLinter.lint import PythonLinter, util, highlight, persist
+from SublimeLinter.lint import Linter, util, highlight, persist
 
 TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-"
 
@@ -25,7 +25,7 @@ TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-"
 tmpdirs = {}  # type: Dict[str, tempfile.TemporaryDirectory]
 
 
-class Mypy(PythonLinter):
+class Mypy(Linter):
     """Provides an interface to mypy."""
 
     syntax = 'python'
@@ -68,7 +68,7 @@ class Mypy(PythonLinter):
     )
     # selectors = {}
     # word_re = None
-    # comment_re = r'\s*#'
+    comment_re = r'\s*#'
     check_version = True
 
     # Used to store TemporaryDirectory instances.
@@ -140,19 +140,6 @@ class Mypy(PythonLinter):
                 # return os.path.dirname(self.filename)
             else:
                 return os.path.realpath('.')
-
-    def build_cmd(self, cmd=None):
-        """Fix internal SublimeLinter `build_cmd`.
-
-        PythonLinter doesn't play well with a callable cmd method,
-        so we override this method here.
-        """
-        if not cmd:
-            cmd = self.cmd
-        if callable(cmd):
-            cmd = cmd()
-
-        return self.insert_args(cmd)
 
 
 def _find_first_nonpackage_parent(file_path):
