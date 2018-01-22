@@ -15,7 +15,7 @@ import os
 import shutil
 import tempfile
 
-from SublimeLinter.lint import Linter, util, highlight, persist
+from SublimeLinter.lint import PythonLinter, util, highlight, persist
 
 TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-"
 
@@ -25,7 +25,7 @@ TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-"
 tmpdirs = {}  # type: Dict[str, tempfile.TemporaryDirectory]
 
 
-class Mypy(Linter):
+class Mypy(PythonLinter):
     """Provides an interface to mypy."""
 
     syntax = 'python'
@@ -33,6 +33,7 @@ class Mypy(Linter):
     version_args = '--version'
     version_re = r'(?P<version>\d+\.\d+(\.\d+)?)'
     version_requirement = '>= 0.520'
+    check_version = True
 
     regex = r'^.+\.py:(?P<line>\d+):(?P<col>\d+): error: (?P<message>.+)'
     error_stream = util.STREAM_BOTH
@@ -61,8 +62,6 @@ class Mypy(Linter):
     default_type = highlight.WARNING
     # selectors = {}
     # word_re = None
-    comment_re = r'\s*#'
-    check_version = True
 
     # Used to store TemporaryDirectory instances.
     # Each view gets its own linter instance, apparently.
@@ -72,7 +71,7 @@ class Mypy(Linter):
         """Return a list with the command line to execute."""
 
         cmd = [
-            self.executable_path,
+            self.executable,
             '*',
             '--follow-imports=silent',  # or 'skip'
             '--ignore-missing-imports',
