@@ -29,7 +29,6 @@ class Mypy(Linter):
     """Provides an interface to mypy."""
 
     syntax = 'python'
-    executable = "mypy"
     version_args = '--version'
     version_re = r'(?P<version>\d+\.\d+(\.\d+)?)'
     version_requirement = '>= 0.520'
@@ -79,7 +78,7 @@ class Mypy(Linter):
         """Return a list with the command line to execute."""
 
         cmd = [
-            self.executable_path,
+            'mypy',
             '*',
             '--follow-imports=silent',  # or 'skip'
             '--ignore-missing-imports',
