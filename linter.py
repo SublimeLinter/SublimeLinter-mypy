@@ -108,32 +108,6 @@ class Mypy(Linter):
 
         return cmd
 
-    def get_chdir(self, settings):
-        """Find the chdir to use with the linter."""
-        # As explained in https://github.com/python/mypy/issues/2974,
-        # we need to overwrite the current working directory
-        # for the executed subprocess
-        # if the file uses relative imports.
-        #
-        # Users could set the `chdir` linter setting,
-        # but they'd have to do it for *every* file using relative imports,
-        # so we just do it for them here if they didn't.
-        chdir = settings.get('chdir', None)
-
-        if chdir and os.path.isdir(chdir):
-            persist.debug('chdir has been set to: {0}'.format(chdir))
-            return chdir
-        else:
-            if self.filename:
-                # Only difference from Linter.get_chdir
-                chdir = _find_first_nonpackage_parent(self.filename)
-                if chdir != os.path.dirname(self.filename):
-                    persist.debug('chdir has been set to: {0}'.format(chdir))
-                return chdir
-                # return os.path.dirname(self.filename)
-            else:
-                return os.path.realpath('.')
-
 
 def _find_first_nonpackage_parent(file_path):
     dir_path = os.path.dirname(file_path)
