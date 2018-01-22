@@ -59,13 +59,6 @@ class Mypy(Linter):
         "--config-file": "",
     }
     default_type = highlight.WARNING
-    inline_settings = (
-        "python-version",
-    )
-    inline_overrides = (
-        "disallow-any",
-        "strict-optional-whitelist",
-    )
     # selectors = {}
     # word_re = None
     comment_re = r'\s*#'
