@@ -107,16 +107,6 @@ class Mypy(PythonLinter):
         return cmd
 
 
-def _find_first_nonpackage_parent(file_path):
-    dir_path = os.path.dirname(file_path)
-    while os.path.isfile(os.path.join(dir_path, "__init__.py")):
-        parent_path = os.path.dirname(dir_path)
-        if parent_path == dir_path:  # Reached file system root; prevent infinite loop
-            break
-        dir_path = parent_path
-    return dir_path
-
-
 def _onerror(function, path, excinfo):
     persist.printf("mypy: Unable to delete '{}' while cleaning up temporary directory"
                    .format(path))
