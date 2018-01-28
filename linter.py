@@ -107,14 +107,11 @@ class Mypy(PythonLinter):
         return cmd
 
 
-def _onerror(function, path, excinfo):
-    persist.printf("mypy: Unable to delete '{}' while cleaning up temporary directory"
-                   .format(path))
-    import traceback
-    traceback.print_exc(*excinfo)
-
-
 def _cleanup_tmpdirs():
+    def _onerror(function, path, excinfo):
+        persist.printf("mypy: Unable to delete '{}' while cleaning up temporary directory".format(path))
+        import traceback
+        traceback.print_exc(*excinfo)
     tmpdir = tempfile.gettempdir()
     for dirname in os.listdir(tmpdir):
         if dirname.startswith(TMPDIR_PREFIX):
