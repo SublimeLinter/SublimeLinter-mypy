@@ -22,7 +22,7 @@ TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-"
 # Mapping for our created temporary directories.
 # For smarter caching purposes,
 # we index different cache folders based on the working dir.
-tmpdirs = {}  # type: Dict[str, tempfile.TemporaryDirectory]
+tmpdirs = {}
 
 
 class Mypy(PythonLinter):
