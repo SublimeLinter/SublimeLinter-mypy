@@ -69,7 +69,6 @@ class Mypy(PythonLinter):
 
     def cmd(self):
         """Return a list with the command line to execute."""
-
         cmd = [
             self.executable,
             '*',
