@@ -39,3 +39,14 @@ class TestRegex(unittest.TestCase):
                 'message': '"dict" is not subscriptable, use "typing.Dict" instead'
             }
         )
+
+        self.assertMatch(
+            '/tmp/yoeai32h2:6:0: error: Cannot find module named \'PackageName.lib\'',
+            {
+                'error': 'error',
+                'line': '6',
+                'col': '0',
+                'warning': None,
+                'message': 'Cannot find module named \'PackageName.lib\''
+            }
+        )
