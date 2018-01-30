@@ -65,10 +65,10 @@ Please note that modifications should follow these coding guidelines:
 
 Thank you for helping out!
 
-[docs]: http://sublimelinter.readthedocs.org
-[installation]: http://sublimelinter.readthedocs.org/en/latest/installation.html
-[locating-executables]: http://sublimelinter.readthedocs.org/en/latest/usage.html#how-linter-executables-are-located
-[pc]: https://sublime.wbond.net/installation
-[cmd]: http://docs.sublimetext.info/en/sublime-text-3/extensibility/command_palette.html
-[settings]: http://sublimelinter.readthedocs.org/en/latest/settings.html
-[linter-settings]: http://sublimelinter.readthedocs.org/en/latest/linter_settings.html
+[docs]: https://sublimelinter.readthedocs.org
+[installation]: https://sublimelinter.readthedocs.org/en/latest/installation.html
+[locating-executables]: https://sublimelinter.readthedocs.org/en/latest/usage.html#how-linter-executables-are-located
+[pc]: https://packagecontrol.io/installation
+[cmd]: https://docs.sublimetext.info/en/sublime-text-3/extensibility/command_palette.html
+[settings]: https://sublimelinter.readthedocs.org/en/latest/settings.html
+[linter-settings]: https://sublimelinter.readthedocs.org/en/latest/linter_settings.html
