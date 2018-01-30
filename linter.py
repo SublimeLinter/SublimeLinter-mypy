@@ -48,7 +48,9 @@ class Mypy(PythonLinter):
     # This dict only contains settings for which we have special handling.
     defaults = {
         # Will default to tempfile.TemporaryDirectory if empty.
-        "--cache-dir": "",
+        "--cache-dir:": "",
+        # Need this to silent lints for other files. Alternatively: 'skip'
+        "--follow-imports:": "silent",
     }
     default_type = highlight.WARNING
     # selectors = {}

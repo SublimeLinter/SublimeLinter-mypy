@@ -44,6 +44,7 @@ For general information on how SublimeLinter works with settings, please see [Se
 |Setting|Description|
 |:------|:----------|
 |cache-dir|The directory to store the cache in. Creates a sub-folder in your temporary directory if not specified.|
+|follow-imports|Whether imports should be followed and linted. The default is `silent`, but `skip` may also be used. The other options are not interesting.|
 
 A file named `mypy.ini` is automatically recognized as the `--config-file` parameter, if it exists.
 All other args to mypy should be specified in the `args` list.
