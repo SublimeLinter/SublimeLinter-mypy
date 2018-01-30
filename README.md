@@ -3,9 +3,10 @@ SublimeLinter-contrib-mypy
 
 [![Build Status](https://travis-ci.org/fredcallaway/SublimeLinter-contrib-mypy.svg?branch=master)](https://travis-ci.org/fredcallaway/SublimeLinter-contrib-mypy)
 
-
-
 This linter plugin for [SublimeLinter][docs] provides an interface to [mypy](http://mypy-lang.org). It will be used with files that have the "python" syntax.
+
+**Information for [Sublime Linter 4 beta][sl4] users**: This plugin is compatible with Sublime Linter 4, but functionality has been improved in the `sl4` branch.
+You can get the latest release for SL4 by enabing pre-release installation for this package.
 
 ## Installation
 SublimeLinter 3 must be installed in order to use this plugin. If SublimeLinter 3 is not installed, please follow the instructions [here][installation].
@@ -65,6 +66,7 @@ Please note that modifications should follow these coding guidelines:
 
 Thank you for helping out!
 
+[sl4]: https://github.com/SublimeLinter/SublimeLinter#sublimelinter-4-beta
 [docs]: https://sublimelinter.readthedocs.org
 [installation]: https://sublimelinter.readthedocs.org/en/latest/installation.html
 [locating-executables]: https://sublimelinter.readthedocs.org/en/latest/usage.html#how-linter-executables-are-located
