@@ -26,16 +26,16 @@ Before using this plugin, you must ensure that `mypy` is installed on your syste
 ### Linter configuration
 In order for `mypy` to be executed by SublimeLinter, you must ensure that its path is available to SublimeLinter. Before going any further, please read and follow the steps in [“Finding a linter executable”](http://sublimelinter.readthedocs.org/en/latest/troubleshooting.html#finding-a-linter-executable) through “Validating your PATH” in the documentation.
 
-Once you have installed and configured `mypy`, you can proceed to install the SublimeLinter-contrib-mypy plugin if it is not yet installed.
+Once you have installed and configured `mypy`, you can proceed to install the SublimeLinter-contrib-mypy plugin, if it is not yet installed.
 
 ### Plugin installation
 Please use [Package Control][pc] to install the linter plugin. This will ensure that the plugin will be updated when new versions are available. If you want to install from source so you can modify the source code, you probably know what you are doing so we won’t cover that here.
 
 To install via Package Control, do the following:
 
-1. Within Sublime Text, bring up the [Command Palette][cmd] and type `install`. Among the commands you should see `Package Control: Install Package`. If that command is not highlighted, use the keyboard or mouse to select it. There will be a pause of a few seconds while Package Control fetches the list of available plugins.
+1. Within Sublime Text, bring up the [Command Palette][cmd] (*Tools → Command Palette…*) and select `Package Control: Install Package`. There may be a pause of a few seconds while Package Control fetches the list of available packages.
 
-1. When the plugin list appears, type `mypy`. Among the entries you should see `SublimeLinter-contrib-mypy`. If that entry is not highlighted, use the keyboard or mouse to select it.
+1. When the package list appears, select `SublimeLinter-contrib-mypy`.
 
 ## Settings
 For general information on how SublimeLinter works with settings, please see [Settings][settings]. For information on generic linter settings, please see [Linter Settings][linter-settings].
