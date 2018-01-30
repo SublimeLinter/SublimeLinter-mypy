@@ -48,32 +48,21 @@ class Mypy(PythonLinter):
     config_file = ('--config-file', 'mypy.ini')
 
     # Pretty much all interesting options don't expect a value,
-    # so you'll have to specify those in "args".
-    # The following are mostly provided
-    # because of their usage for inline settings/overrides.
+    # so you'll have to specify those in "args" anyway.
+    # This dict only contains settings for which we have special handling.
     defaults = {
-        "--strict-optional-whitelist: ": [],
-        "--disallow-any:,": [],
-        "--python-version": "",
         # Will default to tempfile.TemporaryDirectory if empty.
         "--cache-dir": "",
-        "--config-file": "",
     }
     default_type = highlight.WARNING
     # selectors = {}
     # word_re = None
-
-    # Used to store TemporaryDirectory instances.
-    # Each view gets its own linter instance, apparently.
-    _tmp_dir = None
 
     def cmd(self):
         """Return a list with the command line to execute."""
         cmd = [
             self.executable,
             '*',
-            '--follow-imports=silent',  # or 'skip'
-            '--ignore-missing-imports',
             '--show-column-numbers',
             '--hide-error-context',
             '@'
