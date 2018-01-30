@@ -40,11 +40,7 @@ class Mypy(PythonLinter):
     line_col_base = (1, 0)
     # multiline = False
 
-    # mypy takes quite some time, so we only do it on saved files.
-    # If you want it for unsaved files as well,
-    # uncomment the second line below.
     tempfile_suffix = 'py'
-    tempfile_suffix = '-'
     config_file = ('--config-file', 'mypy.ini')
 
     # Pretty much all interesting options don't expect a value,
@@ -65,18 +61,16 @@ class Mypy(PythonLinter):
             '*',
             '--show-column-numbers',
             '--hide-error-context',
-            '@'
-        ]
-
-        if self.tempfile_suffix == "-":
+            '--incremental',
             # --shadow-file SOURCE_FILE SHADOW_FILE
             #
-            # '@' needs to be the shadow file,
+            # '@' needs to be the (temporary) shadow file,
             # while we request the normal filename
             # to be checked in its normal environment.
-            # Trying to be smart about view.is_dirty and optimizing '--shadow-file' away
-            # doesn't work well with SublimeLinter internals.
-            cmd[-1:] = ['--shadow-file', self.filename, '@', self.filename]
+            '--shadow-file', self.filename, '@',
+            # The file we want to lint on the surface
+            self.filename
+        ]
 
         # Add a temporary cache dir to the command if none was specified.
         # Helps keep the environment clean
