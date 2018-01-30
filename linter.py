@@ -22,7 +22,7 @@ TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-"
 # Mapping for our created temporary directories.
 # For smarter caching purposes,
 # we index different cache folders based on the working dir.
-tmpdirs = {}  # type: Dict[str, tempfile.TemporaryDirectory]
+tmpdirs = {}
 
 
 class Mypy(PythonLinter):
@@ -35,7 +35,7 @@ class Mypy(PythonLinter):
     version_requirement = '>= 0.520'
     check_version = True
 
-    regex = r'^.+\.py:(?P<line>\d+):(?P<col>\d+): error: (?P<message>.+)'
+    regex = r'^[^:]*(?:\.py)?:(?P<line>\d+):(?P<col>\d+)?:? (?:(?P<error>error)|(?P<warning>warning)): (?P<message>.+)'
     error_stream = util.STREAM_BOTH
     line_col_base = (1, 0)
     # multiline = False
@@ -69,7 +69,6 @@ class Mypy(PythonLinter):
 
     def cmd(self):
         """Return a list with the command line to execute."""
-
         cmd = [
             self.executable,
             '*',
@@ -108,24 +107,11 @@ class Mypy(PythonLinter):
         return cmd
 
 
-def _find_first_nonpackage_parent(file_path):
-    dir_path = os.path.dirname(file_path)
-    while os.path.isfile(os.path.join(dir_path, "__init__.py")):
-        parent_path = os.path.dirname(dir_path)
-        if parent_path == dir_path:  # Reached file system root; prevent infinite loop
-            break
-        dir_path = parent_path
-    return dir_path
-
-
-def _onerror(function, path, excinfo):
-    persist.printf("mypy: Unable to delete '{}' while cleaning up temporary directory"
-                   .format(path))
-    import traceback
-    traceback.print_exc(*excinfo)
-
-
 def _cleanup_tmpdirs():
+    def _onerror(function, path, excinfo):
+        persist.printf("mypy: Unable to delete '{}' while cleaning up temporary directory".format(path))
+        import traceback
+        traceback.print_exc(*excinfo)
     tmpdir = tempfile.gettempdir()
     for dirname in os.listdir(tmpdir):
         if dirname.startswith(TMPDIR_PREFIX):
