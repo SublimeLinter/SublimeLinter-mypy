@@ -37,11 +37,8 @@ class Mypy(PythonLinter):
     version_re = r'(?P<version>\d+\.\d+(\.\d+)?)'
     version_requirement = '>= 0.520'
     check_version = True
-
     regex = r'^[^:]+:(?P<line>\d+):((?P<col>\d+):)?\s*((?P<error>error)|(?P<warning>warning)):\s*(?P<message>.+)'
     line_col_base = (1, 0)
-    # multiline = False
-
     tempfile_suffix = 'py'
     config_file = ('--config-file', 'mypy.ini')
 
@@ -56,9 +53,6 @@ class Mypy(PythonLinter):
     }
 
     default_type = const.WARNING
-
-    # selectors = {}
-    # word_re = None
 
     def cmd(self):
         """Return a list with the command line to execute."""
