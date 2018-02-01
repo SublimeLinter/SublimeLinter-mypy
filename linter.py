@@ -15,7 +15,11 @@ import os
 import shutil
 import tempfile
 
-from SublimeLinter.lint import PythonLinter, util, highlight, persist
+from SublimeLinter.lint import const
+from SublimeLinter.lint import persist
+from SublimeLinter.lint import PythonLinter
+from SublimeLinter.lint import util
+
 
 TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-"
 
@@ -52,7 +56,9 @@ class Mypy(PythonLinter):
         # Need this to silent lints for other files. Alternatively: 'skip'
         "--follow-imports:": "silent",
     }
-    default_type = highlight.WARNING
+
+    default_type = const.WARNING
+
     # selectors = {}
     # word_re = None
 
