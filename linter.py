@@ -18,7 +18,6 @@ import tempfile
 from SublimeLinter.lint import const
 from SublimeLinter.lint import persist
 from SublimeLinter.lint import PythonLinter
-from SublimeLinter.lint import util
 
 
 TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-"
@@ -40,7 +39,6 @@ class Mypy(PythonLinter):
     check_version = True
 
     regex = r'^[^:]+:(?P<line>\d+):((?P<col>\d+):)?\s*((?P<error>error)|(?P<warning>warning)):\s*(?P<message>.+)'
-    error_stream = util.STREAM_BOTH
     line_col_base = (1, 0)
     # multiline = False
 
