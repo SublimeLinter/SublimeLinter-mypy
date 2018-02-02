@@ -15,7 +15,10 @@ import os
 import shutil
 import tempfile
 
-from SublimeLinter.lint import PythonLinter, util, highlight, persist
+from SublimeLinter.lint import const
+from SublimeLinter.lint import persist
+from SublimeLinter.lint import PythonLinter
+
 
 TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-"
 
@@ -34,12 +37,8 @@ class Mypy(PythonLinter):
     version_re = r'(?P<version>\d+\.\d+(\.\d+)?)'
     version_requirement = '>= 0.520'
     check_version = True
-
     regex = r'^[^:]+:(?P<line>\d+):((?P<col>\d+):)?\s*((?P<error>error)|(?P<warning>warning)):\s*(?P<message>.+)'
-    error_stream = util.STREAM_BOTH
     line_col_base = (1, 0)
-    # multiline = False
-
     tempfile_suffix = 'py'
     config_file = ('--config-file', 'mypy.ini')
 
@@ -52,9 +51,8 @@ class Mypy(PythonLinter):
         # Need this to silent lints for other files. Alternatively: 'skip'
         "--follow-imports:": "silent",
     }
-    default_type = highlight.WARNING
-    # selectors = {}
-    # word_re = None
+
+    default_type = const.WARNING
 
     def cmd(self):
         """Return a list with the command line to execute."""
