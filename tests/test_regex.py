@@ -16,37 +16,35 @@ class TestRegex(unittest.TestCase):
         self.assertIsNotNone(match)
         self.assertEqual(match.groupdict(), expected)
 
-    def test_regex(self):
+    def assertMatchIsNone(self, string):
+        self.assertIsNone(re.match(regex, string))
 
+    def test_no_matches(self):
+        self.assertMatchIsNone('')
+        self.assertMatchIsNone('foo')
+
+    def test_matches(self):
         self.assertMatch(
-            '/path/to/package/module.py:18:4: error: No return value expected',
-            {
+            '/path/to/package/module.py:18:4: error: No return value expected', {
                 'error': 'error',
                 'line': '18',
                 'col': '4',
                 'warning': None,
-                'message': 'No return value expected'
-            }
-        )
+                'message': 'No return value expected'})
 
         self.assertMatch(
-            '/path/to/package/module.py:40: error: "dict" is not subscriptable, use "typing.Dict" instead',
-            {
+            '/path/to/package/module.py:40: error: "dict" is not subscriptable, use "typing.Dict" instead', {
                 'error': 'error',
                 'line': '40',
                 'col': None,
                 'warning': None,
-                'message': '"dict" is not subscriptable, use "typing.Dict" instead'
-            }
-        )
+                'message': '"dict" is not subscriptable, use "typing.Dict" instead'})
 
+    def test_tmp_files_that_have_no_file_extension(self):
         self.assertMatch(
-            '/tmp/yoeai32h2:6:0: error: Cannot find module named \'PackageName.lib\'',
-            {
+            '/tmp/yoeai32h2:6:0: error: Cannot find module named \'PackageName.lib\'', {
                 'error': 'error',
                 'line': '6',
                 'col': '0',
                 'warning': None,
-                'message': 'Cannot find module named \'PackageName.lib\''
-            }
-        )
+                'message': 'Cannot find module named \'PackageName.lib\''})
