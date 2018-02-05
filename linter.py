@@ -62,15 +62,20 @@ class Mypy(PythonLinter):
             '--show-column-numbers',
             '--hide-error-context',
             '--incremental',
-            # --shadow-file SOURCE_FILE SHADOW_FILE
-            #
-            # '@' needs to be the (temporary) shadow file,
-            # while we request the normal filename
-            # to be checked in its normal environment.
-            '--shadow-file', self.filename, '@',
-            # The file we want to lint on the surface
-            self.filename
         ]
+        if self.filename:
+            cmd.extend([
+                # --shadow-file SOURCE_FILE SHADOW_FILE
+                #
+                # '@' needs to be the (temporary) shadow file,
+                # while we request the normal filename
+                # to be checked in its normal environment.
+                '--shadow-file', self.filename, '@',
+                # The file we want to lint on the surface
+                self.filename
+            ])
+        else:
+            cmd.append('@')
 
         # Add a temporary cache dir to the command if none was specified.
         # Helps keep the environment clean
