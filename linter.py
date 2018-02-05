@@ -15,7 +15,15 @@ import os
 import shutil
 import tempfile
 
-from SublimeLinter.lint import Linter, util, highlight, persist
+from SublimeLinter.lint import Linter, util, persist
+
+import SublimeLinter
+if getattr(SublimeLinter.lint, 'VERSION', 3) > 3:
+    from SublimeLinter.lint import const
+    WARNING = const.WARNING
+else:
+    from SublimeLinter.lint import highlight
+    WARNING = highlight.WARNING
 
 TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-"
 
@@ -58,7 +66,7 @@ class Mypy(Linter):
         "--cache-dir": "",
         "--config-file": "",
     }
-    default_type = highlight.WARNING
+    default_type = WARNING
     inline_settings = (
         "python-version",
     )
