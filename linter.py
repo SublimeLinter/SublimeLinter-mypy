@@ -33,7 +33,6 @@ tmpdirs = {}
 class Mypy(PythonLinter):
     """Provides an interface to mypy."""
 
-    syntax = 'python'
     executable = "mypy"
     regex = r'^[^:]+:(?P<line>\d+):((?P<col>\d+):)?\s*((?P<error>error)|(?P<warning>warning)):\s*(?P<message>.+)'
     line_col_base = (1, 0)
@@ -48,6 +47,7 @@ class Mypy(PythonLinter):
         "--cache-dir:": "",
         # Need this to silent lints for other files. Alternatively: 'skip'
         "--follow-imports:": "silent",
+        'selector': "source.python",
     }
 
     def cmd(self):
