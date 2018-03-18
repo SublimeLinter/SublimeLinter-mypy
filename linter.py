@@ -35,14 +35,10 @@ class Mypy(PythonLinter):
 
     syntax = 'python'
     executable = "mypy"
-    version_args = '--version'
-    version_re = r'(?P<version>\d+\.\d+(\.\d+)?)'
-    version_requirement = '>= 0.520'
-    check_version = True
     regex = r'^[^:]+:(?P<line>\d+):((?P<col>\d+):)?\s*((?P<error>error)|(?P<warning>warning)):\s*(?P<message>.+)'
     line_col_base = (1, 0)
     tempfile_suffix = 'py'
-    config_file = ('--config-file', 'mypy.ini')
+    default_type = const.WARNING
 
     # Pretty much all interesting options don't expect a value,
     # so you'll have to specify those in "args" anyway.
@@ -53,8 +49,6 @@ class Mypy(PythonLinter):
         # Need this to silent lints for other files. Alternatively: 'skip'
         "--follow-imports:": "silent",
     }
-
-    default_type = const.WARNING
 
     def cmd(self):
         """Return a list with the command line to execute."""
