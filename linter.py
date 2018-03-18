@@ -34,7 +34,7 @@ class Mypy(Linter):
     version_re = r'(?P<version>\d+\.\d+(\.\d+)?)'
     version_requirement = '>= 0.520'
 
-    regex = r'^.+\.py:(?P<line>\d+):(?P<col>\d+): error: (?P<message>.+)'
+    regex = r'^.+\.py:(?P<line>\d+):((?P<col>\d+):)? error: (?P<message>.+)'
     error_stream = util.STREAM_BOTH
     line_col_base = (1, 0)
     # multiline = False
