@@ -11,16 +11,18 @@
 
 """This module exports the Mypy plugin class."""
 
+import logging
 import os
 import shutil
 import tempfile
 
 from SublimeLinter.lint import const
-from SublimeLinter.lint import persist
 from SublimeLinter.lint import PythonLinter
 
 
 TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-"
+
+logger = logging.getLogger("SublimeLinter.plugin.mypy")
 
 # Mapping for our created temporary directories.
 # For smarter caching purposes,
@@ -89,17 +91,16 @@ class Mypy(PythonLinter):
                 tmp_dir = tempfile.TemporaryDirectory(prefix=TMPDIR_PREFIX)
                 tmpdirs[cwd] = tmp_dir
                 cache_dir = tmp_dir.name
-                persist.debug("Created temporary cache dir at: " + cache_dir)
+                logger.debug("Created temporary cache dir at: %s", cache_dir)
             cmd[1:1] = ["--cache-dir", cache_dir]
 
         return cmd
 
 
 def _cleanup_tmpdirs():
-    def _onerror(function, path, excinfo):
-        persist.printf("mypy: Unable to delete '{}' while cleaning up temporary directory".format(path))
-        import traceback
-        traceback.print_exc(*excinfo)
+    def _onerror(function, path, exc_info):
+        logger.exception("mypy: Unable to delete '%s' while cleaning up temporary directory", path,
+                         exc_info=exc_info)
     tmpdir = tempfile.gettempdir()
     for dirname in os.listdir(tmpdir):
         if dirname.startswith(TMPDIR_PREFIX):
