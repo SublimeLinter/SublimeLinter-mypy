@@ -3,9 +3,10 @@ SublimeLinter-contrib-mypy
 
 [![Build Status](https://travis-ci.org/fredcallaway/SublimeLinter-contrib-mypy.svg?branch=master)](https://travis-ci.org/fredcallaway/SublimeLinter-contrib-mypy)
 
-
-
 This linter plugin for [SublimeLinter][docs] provides an interface to [mypy](http://mypy-lang.org). It will be used with files that have the "python" syntax.
+
+**Information for [Sublime Linter 4 beta][sl4] users**: This plugin is compatible with Sublime Linter 4, but functionality has been improved in the `sl4` branch.
+You can get the latest release for SL4 by enabing pre-release installation for this package.
 
 ## Installation
 SublimeLinter 3 must be installed in order to use this plugin. If SublimeLinter 3 is not installed, please follow the instructions [here][installation].
@@ -26,29 +27,27 @@ Before using this plugin, you must ensure that `mypy` is installed on your syste
 ### Linter configuration
 In order for `mypy` to be executed by SublimeLinter, you must ensure that its path is available to SublimeLinter. Before going any further, please read and follow the steps in [“Finding a linter executable”](http://sublimelinter.readthedocs.org/en/latest/troubleshooting.html#finding-a-linter-executable) through “Validating your PATH” in the documentation.
 
-Once you have installed and configured `mypy`, you can proceed to install the SublimeLinter-contrib-mypy plugin if it is not yet installed.
+Once you have installed and configured `mypy`, you can proceed to install the SublimeLinter-contrib-mypy plugin, if it is not yet installed.
 
 ### Plugin installation
 Please use [Package Control][pc] to install the linter plugin. This will ensure that the plugin will be updated when new versions are available. If you want to install from source so you can modify the source code, you probably know what you are doing so we won’t cover that here.
 
 To install via Package Control, do the following:
 
-1. Within Sublime Text, bring up the [Command Palette][cmd] and type `install`. Among the commands you should see `Package Control: Install Package`. If that command is not highlighted, use the keyboard or mouse to select it. There will be a pause of a few seconds while Package Control fetches the list of available plugins.
+1. Within Sublime Text, bring up the [Command Palette][cmd] (*Tools → Command Palette…*) and select `Package Control: Install Package`. There may be a pause of a few seconds while Package Control fetches the list of available packages.
 
-1. When the plugin list appears, type `mypy`. Among the entries you should see `SublimeLinter-contrib-mypy`. If that entry is not highlighted, use the keyboard or mouse to select it.
+1. When the package list appears, select `SublimeLinter-contrib-mypy`.
 
 ## Settings
 For general information on how SublimeLinter works with settings, please see [Settings][settings]. For information on generic linter settings, please see [Linter Settings][linter-settings].
 
-|Setting|Description|Inline Setting|Inline Override|
-|:------|:----------|:------------:|:-------------:|
-|disallow-any|A comma-separated list of the various types of Any in a module to disallow.|&#10003;|&#10003;|
-|strict-optional-whitelist|A comma-separated list of GLOBs for files to ignore strict optional checking.|&#10003;|&#10003;|
-|python-version|The Python version that mypy should use for its type stubs.|&#10003;| |
-|cache-dir|The directory to store the cache in. Creates a sub-folder in your temporary directory if not specified.| | |
-|config-file|Path to the config file to use. A file named `mypy.ini` is recognized automatically.| | |
+|Setting|Description|
+|:------|:----------|
+|cache-dir|The directory to store the cache in. Creates a sub-folder in your temporary directory if not specified.|
+|follow-imports|Whether imports should be followed and linted. The default is `silent`, but `skip` may also be used. The other options are not interesting.|
 
-All other args to mypy should be specified in the `args` list, since they are just flags, rarely used or don't make sense to be recognized as an inline setting.
+A file named `mypy.ini` is automatically recognized as the `--config-file` parameter, if it exists.
+All other args to mypy should be specified in the `args` list.
 
 ## Contributing
 If you would like to contribute enhancements or fixes, please do the following:
@@ -68,11 +67,11 @@ Please note that modifications should follow these coding guidelines:
 
 Thank you for helping out!
 
-[docs]: http://sublimelinter.readthedocs.org
-[installation]: http://sublimelinter.readthedocs.org/en/latest/installation.html
-[locating-executables]: http://sublimelinter.readthedocs.org/en/latest/usage.html#how-linter-executables-are-located
-[pc]: https://sublime.wbond.net/installation
-[cmd]: http://docs.sublimetext.info/en/sublime-text-3/extensibility/command_palette.html
-[settings]: http://sublimelinter.readthedocs.org/en/latest/settings.html
-[linter-settings]: http://sublimelinter.readthedocs.org/en/latest/linter_settings.html
-[inline-settings]: http://sublimelinter.readthedocs.org/en/latest/settings.html#inline-settings
+[sl4]: https://github.com/SublimeLinter/SublimeLinter#sublimelinter-4-beta
+[docs]: https://sublimelinter.readthedocs.org
+[installation]: https://sublimelinter.readthedocs.org/en/latest/installation.html
+[locating-executables]: https://sublimelinter.readthedocs.org/en/latest/usage.html#how-linter-executables-are-located
+[pc]: https://packagecontrol.io/installation
+[cmd]: https://docs.sublimetext.info/en/sublime-text-3/extensibility/command_palette.html
+[settings]: https://sublimelinter.readthedocs.org/en/latest/settings.html
+[linter-settings]: https://sublimelinter.readthedocs.org/en/latest/linter_settings.html
