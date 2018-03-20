@@ -14,6 +14,7 @@
 import os
 import shutil
 import tempfile
+import re
 
 from SublimeLinter.lint import Linter, util, highlight, persist
 
@@ -36,7 +37,9 @@ class Mypy(Linter):
 
     regex = r'^.+\.py:(?P<line>\d+):((?P<col>\d+):)? error: (?P<message>.+)'
     error_stream = util.STREAM_BOTH
-    line_col_base = (1, 1)
+
+    line_col_base = (1, 0)
+
     # multiline = False
 
     # mypy takes quite some time, so we only do it on saved files.
@@ -74,6 +77,13 @@ class Mypy(Linter):
     # Used to store TemporaryDirectory instances.
     # Each view gets its own linter instance, apparently.
     _tmp_dir = None
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        version = float(self._get_version())
+        if version >= 0.57:
+            self.line_col_base = (1, 1)
 
     def cmd(self):
         """Return a list with the command line to execute."""
@@ -114,6 +124,12 @@ class Mypy(Linter):
             cmd[1:1] = ["--cache-dir", cache_dir]
 
         return cmd
+
+    def _get_version(self):
+        """Return installed mypy version as a string."""
+        output = util.communicate(self.executable + ' --version')
+        version = re.findall(self.version_re, str(output))[0][0]
+        return version
 
     def get_chdir(self, settings):
         """Find the chdir to use with the linter."""
