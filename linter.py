@@ -13,10 +13,12 @@
 
 import logging
 import os
+import re
 import shutil
 import tempfile
 
 from SublimeLinter.lint import const
+from SublimeLinter.lint import util
 from SublimeLinter.lint import PythonLinter
 
 
@@ -35,7 +37,7 @@ class Mypy(PythonLinter):
 
     executable = "mypy"
     regex = r'^[^:]+:(?P<line>\d+):((?P<col>\d+):)?\s*((?P<error>error)|(?P<warning>warning)):\s*(?P<message>.+)'
-    line_col_base = (1, 0)
+    line_col_base = (1, 1)
     tempfile_suffix = 'py'
     default_type = const.WARNING
 
@@ -89,6 +91,28 @@ class Mypy(PythonLinter):
             cmd[1:1] = ["--cache-dir", cache_dir]
 
         return cmd
+
+    def split_match(self, match):
+        lint_match = super().split_match(match)
+        # Column numbers were 0-based before version 0.570
+        if self._get_version() < (0, 570):
+            lint_match = lint_match._replace(col=lint_match.col - 1)
+        return lint_match
+
+    def _get_version(self):
+        """Determine the linter's version by command invocation."""
+        success, cmd = self.context_sensitive_executable_path(self.executable)
+        if isinstance(cmd, str):
+            cmd = [cmd]
+        cmd.append('--version')
+        output = util.communicate(cmd)
+        match = re.search(r"(\d+)\.(\d+)(?:\.(\d+))?", output)
+        if not match:
+            logger.info("failed to determine mypy version. output:\n%s", output)
+            return ()
+        version = tuple(int(g) for g in match.groups() if g)
+        logger.info("mypy version: %s", version)
+        return version
 
 
 def _cleanup_tmpdirs():
