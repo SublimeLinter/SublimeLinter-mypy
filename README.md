@@ -1,15 +1,12 @@
 SublimeLinter-contrib-mypy
-================================
+==========================
 
 [![Build Status](https://travis-ci.org/fredcallaway/SublimeLinter-contrib-mypy.svg?branch=master)](https://travis-ci.org/fredcallaway/SublimeLinter-contrib-mypy)
 
 This linter plugin for [SublimeLinter][docs] provides an interface to [mypy](http://mypy-lang.org). It will be used with files that have the "python" syntax.
 
-**Information for [Sublime Linter 4 beta][sl4] users**: This plugin is compatible with Sublime Linter 4, but functionality has been improved in the `sl4` branch.
-You can get the latest release for SL4 by enabing pre-release installation for this package.
-
 ## Installation
-SublimeLinter 3 must be installed in order to use this plugin. If SublimeLinter 3 is not installed, please follow the instructions [here][installation].
+SublimeLinter 4 must be installed in order to use this plugin. If SublimeLinter is not installed, please follow the instructions [here][installation].
 
 ### Linter installation
 Before using this plugin, you must ensure that `mypy` is installed on your system. To install `mypy`, do the following:
@@ -41,12 +38,13 @@ To install via Package Control, do the following:
 ## Settings
 For general information on how SublimeLinter works with settings, please see [Settings][settings]. For information on generic linter settings, please see [Linter Settings][linter-settings].
 
+Following is a list of *additional* settings specific to this linter:
+
 |Setting|Description|
 |:------|:----------|
 |cache-dir|The directory to store the cache in. Creates a sub-folder in your temporary directory if not specified.|
 |follow-imports|Whether imports should be followed and linted. The default is `silent`, but `skip` may also be used. The other options are not interesting.|
 
-A file named `mypy.ini` is automatically recognized as the `--config-file` parameter, if it exists.
 All other args to mypy should be specified in the `args` list.
 
 ## Contributing
@@ -67,10 +65,8 @@ Please note that modifications should follow these coding guidelines:
 
 Thank you for helping out!
 
-[sl4]: https://github.com/SublimeLinter/SublimeLinter#sublimelinter-4-beta
 [docs]: https://sublimelinter.readthedocs.org
 [installation]: https://sublimelinter.readthedocs.org/en/latest/installation.html
-[locating-executables]: https://sublimelinter.readthedocs.org/en/latest/usage.html#how-linter-executables-are-located
 [pc]: https://packagecontrol.io/installation
 [cmd]: https://docs.sublimetext.info/en/sublime-text-3/extensibility/command_palette.html
 [settings]: https://sublimelinter.readthedocs.org/en/latest/settings.html
