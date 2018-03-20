@@ -66,12 +66,12 @@ class Mypy(PythonLinter):
                 # '@' needs to be the (temporary) shadow file,
                 # while we request the normal filename
                 # to be checked in its normal environment.
-                '--shadow-file', self.filename, '@',
+                '--shadow-file', self.filename, '${temp_file}',
                 # The file we want to lint on the surface
                 self.filename
             ])
         else:
-            cmd.append('@')
+            cmd.append('${temp_file}')
 
         # Add a temporary cache dir to the command if none was specified.
         # Helps keep the environment clean
@@ -85,7 +85,7 @@ class Mypy(PythonLinter):
                 tmp_dir = tempfile.TemporaryDirectory(prefix=TMPDIR_PREFIX)
                 tmpdirs[cwd] = tmp_dir
                 cache_dir = tmp_dir.name
-                logger.debug("Created temporary cache dir at: %s", cache_dir)
+                logger.info("Created temporary cache dir at: %s", cache_dir)
             cmd[1:1] = ["--cache-dir", cache_dir]
 
         return cmd
