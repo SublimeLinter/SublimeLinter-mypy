@@ -15,9 +15,10 @@ import logging
 import os
 import shutil
 import tempfile
+import re
 
 from SublimeLinter.lint import const
-from SublimeLinter.lint import PythonLinter
+from SublimeLinter.lint import PythonLinter, util
 
 
 TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-"
@@ -35,6 +36,7 @@ class Mypy(PythonLinter):
 
     executable = "mypy"
     regex = r'^[^:]+:(?P<line>\d+):((?P<col>\d+):)?\s*((?P<error>error)|(?P<warning>warning)):\s*(?P<message>.+)'
+    version_re = r'(?P<version>\d+\.\d+(\.\d+)?)'
     line_col_base = (1, 0)
     tempfile_suffix = 'py'
     default_type = const.WARNING
@@ -49,6 +51,13 @@ class Mypy(PythonLinter):
         "--follow-imports:": "silent",
         'selector': "source.python",
     }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        version = float(self._get_version())
+        if version >= 0.57:
+            self.line_col_base = (1, 1)
 
     def cmd(self):
         """Return a list with the command line to execute."""
@@ -89,6 +98,12 @@ class Mypy(PythonLinter):
             cmd[1:1] = ["--cache-dir", cache_dir]
 
         return cmd
+
+    def _get_version(self):
+        """Return installed mypy version as a string."""
+        output = util.communicate(self.executable + ' --version')
+        version = re.findall(self.version_re, str(output))[0][0]
+        return version
 
 
 def _cleanup_tmpdirs():
