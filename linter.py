@@ -54,7 +54,11 @@ class Mypy(PythonLinter):
 
     def run(self, *args):
         # Column numbers were 0-based before version 0.570
-        if self._get_version() < (0, 570):
+        version = self._get_version()
+        if version < (0, 520):
+            # abort lint
+            raise RuntimeError("mypy linter plugin requires at least version 0.520")
+        if version < (0, 570):
             self.line_col_base = (1, 0)
         else:
             self.line_col_base = (1, 1)
