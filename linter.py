@@ -62,7 +62,7 @@ class Mypy(PythonLinter):
             self.line_col_base = (1, 0)
         else:
             self.line_col_base = (1, 1)
-        super().run(*args)
+        return super().run(*args)
 
     def cmd(self):
         """Return a list with the command line to execute."""
