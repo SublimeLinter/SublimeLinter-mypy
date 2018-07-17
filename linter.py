@@ -16,13 +16,14 @@ import os
 import re
 import shutil
 import tempfile
+import getpass
 
 from SublimeLinter.lint import const
 from SublimeLinter.lint import util
 from SublimeLinter.lint import PythonLinter
 
-
-TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-"
+USER = getpass.getuser()
+TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-%s" % USER
 
 logger = logging.getLogger("SublimeLinter.plugin.mypy")
 
