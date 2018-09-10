@@ -19,7 +19,6 @@ import tempfile
 import getpass
 
 from SublimeLinter.lint import const
-from SublimeLinter.lint import util
 from SublimeLinter.lint import PythonLinter
 
 USER = getpass.getuser()
@@ -111,7 +110,7 @@ class Mypy(PythonLinter):
         if isinstance(cmd, str):
             cmd = [cmd]
         cmd.append('--version')
-        output = util.communicate(cmd)
+        output = self.communicate(cmd)
         match = re.search(r"(\d+)\.(\d+)(?:\.(\d+))?", output)
         if not match:
             logger.info("failed to determine mypy version. output:\n%s", output)
