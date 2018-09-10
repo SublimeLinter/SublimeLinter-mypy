@@ -68,7 +68,7 @@ class Mypy(PythonLinter):
         """Return a list with the command line to execute."""
         cmd = [
             self.executable,
-            '*',
+            '${args}',
             '--show-column-numbers',
             '--hide-error-context',
             '--incremental',
@@ -80,9 +80,9 @@ class Mypy(PythonLinter):
                 # '@' needs to be the (temporary) shadow file,
                 # while we request the normal filename
                 # to be checked in its normal environment.
-                '--shadow-file', self.filename, '${temp_file}',
+                '--shadow-file', '${file}', '${temp_file}',
                 # The file we want to lint on the surface
-                self.filename
+                '${file}',
             ])
         else:
             cmd.append('${temp_file}')
