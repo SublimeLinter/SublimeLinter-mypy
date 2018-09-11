@@ -43,9 +43,10 @@ Following is a list of *additional* settings specific to this linter:
 |Setting|Description|
 |:------|:----------|
 |cache-dir|The directory to store the cache in. Creates a sub-folder in your temporary directory if not specified.|
-|follow-imports|Whether imports should be followed and linted. The default is `silent`, but `skip` may also be used. The other options are not interesting.|
+|follow-imports|Whether imports should be followed and linted. The default is `"silent"`, but `"skip"` may also be used. The other options are not interesting.|
+|incremental|By default, we use incremental mode to speed up lint passes. Set this to `false` to disable.|
 
-All other args to mypy should be specified in the `args` list.
+All other args to mypy should be specified in the `args` list directly.
 
 [docs]: https://sublimelinter.readthedocs.org
 [installation]: https://sublimelinter.readthedocs.org/en/latest/installation.html

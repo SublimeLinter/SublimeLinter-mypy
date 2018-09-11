@@ -45,11 +45,13 @@ class Mypy(PythonLinter):
     # so you'll have to specify those in "args" anyway.
     # This dict only contains settings for which we have special handling.
     defaults = {
+        'selector': "source.python",
         # Will default to tempfile.TemporaryDirectory if empty.
         "--cache-dir:": "",
+        # Allow users to disable this
+        "--incremental": True,
         # Need this to silent lints for other files. Alternatively: 'skip'
         "--follow-imports:": "silent",
-        'selector': "source.python",
     }
 
     def run(self, *args):
@@ -71,7 +73,7 @@ class Mypy(PythonLinter):
             '${args}',
             '--show-column-numbers',
             '--hide-error-context',
-            '--incremental',
+            # '--incremental',
         ]
         if self.filename:
             cmd.extend([
