@@ -94,7 +94,7 @@ class Mypy(PythonLinter):
         # by not littering everything with `.mypy_cache` folders.
         settings = self.get_view_settings()
         if not settings.get('cache-dir'):
-            cwd = os.getcwd()
+            cwd = self.get_working_dir(settings)
             if cwd in tmpdirs:
                 cache_dir = tmpdirs[cwd].name
             else:
