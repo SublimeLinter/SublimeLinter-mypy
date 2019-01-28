@@ -124,7 +124,7 @@ class Mypy(PythonLinter):
 
 def _cleanup_tmpdirs():
     def _onerror(function, path, exc_info):
-        logger.exception("mypy: Unable to delete '%s' while cleaning up temporary directory", path,
+        logger.exception("Unable to delete '%s' while cleaning up temporary directory", path,
                          exc_info=exc_info)
     tmpdir = tempfile.gettempdir()
     for dirname in os.listdir(tmpdir):
