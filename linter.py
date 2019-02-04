@@ -138,12 +138,3 @@ def _cleanup_tmpdirs():
 def plugin_loaded():
     """Attempt to clean up temporary directories from previous runs."""
     _cleanup_tmpdirs()
-
-
-def plugin_unloaded():
-    """Clear references to TemporaryDirectory instances.
-
-    They should then be removed automatically.
-    """
-    # (Actually, do we even need to do this?)
-    tmpdirs.clear()
