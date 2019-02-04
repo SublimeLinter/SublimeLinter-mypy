@@ -13,7 +13,6 @@
 
 import logging
 import os
-import re
 import shutil
 import tempfile
 import getpass
@@ -57,18 +56,6 @@ class Mypy(PythonLinter):
         "--follow-imports:": "silent",
     }
 
-    def run(self, *args):
-        # Column numbers were 0-based before version 0.570
-        version = self._get_version()
-        if version < (0, 520):
-            # abort lint
-            raise RuntimeError("mypy linter plugin requires at least version 0.520")
-        if version < (0, 570):
-            self.line_col_base = (1, 0)
-        else:
-            self.line_col_base = (1, 1)
-        return super().run(*args)
-
     def cmd(self):
         """Return a list with the command line to execute."""
         cmd = [
@@ -108,21 +95,6 @@ class Mypy(PythonLinter):
             cmd[1:1] = ["--cache-dir", cache_dir]
 
         return cmd
-
-    def _get_version(self):
-        """Determine the linter's version by command invocation."""
-        success, cmd = self.context_sensitive_executable_path(self.executable)
-        if isinstance(cmd, str):
-            cmd = [cmd]
-        cmd.append('--version')
-        output = self.communicate(cmd)
-        match = re.search(r"(\d+)\.(\d+)(?:\.(\d+))?", output)
-        if not match:
-            logger.info("failed to determine mypy version. output:\n%s", output)
-            return ()
-        version = tuple(int(g) for g in match.groups() if g)
-        logger.info("mypy version: %s", version)
-        return version
 
 
 def _cleanup_tmpdirs():
