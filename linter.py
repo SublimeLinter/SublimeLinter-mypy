@@ -28,10 +28,7 @@ logger = logging.getLogger("SublimeLinter.plugin.mypy")
 # Mapping for our created temporary directories.
 # For smarter caching purposes,
 # we index different cache folders based on the working dir.
-try:
-    tmpdirs
-except NameError:
-    tmpdirs = {}
+tmpdirs = {}
 
 
 class Mypy(PythonLinter):
