@@ -34,7 +34,6 @@ tmpdirs = {}
 class Mypy(PythonLinter):
     """Provides an interface to mypy."""
 
-    executable = "mypy"
     regex = r'^[^:]+:(?P<line>\d+):((?P<col>\d+):)?\s*(?P<error_type>[^:]+):\s*(?P<message>.+)'
     line_col_base = (1, 1)
     tempfile_suffix = 'py'
@@ -56,7 +55,7 @@ class Mypy(PythonLinter):
     def cmd(self):
         """Return a list with the command line to execute."""
         cmd = [
-            self.executable,
+            'mypy',
             '${args}',
             '--show-column-numbers',
             '--hide-error-context',
