@@ -78,9 +78,8 @@ class Mypy(PythonLinter):
         # Add a temporary cache dir to the command if none was specified.
         # Helps keep the environment clean
         # by not littering everything with `.mypy_cache` folders.
-        settings = self.get_view_settings()
-        if not settings.get('cache-dir'):
-            cwd = self.get_working_dir(settings)
+        if not self.settings.get('cache-dir'):
+            cwd = self.get_working_dir()
             if cwd in tmpdirs:
                 cache_dir = tmpdirs[cwd].name
             else:
