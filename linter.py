@@ -49,7 +49,10 @@ except NameError:
 class Mypy(PythonLinter):
     """Provides an interface to mypy."""
 
-    regex = r'^(\w:)?[^:]+:(?P<line>\d+):((?P<col>\d+):)?\s*(?P<error_type>[^:]+):\s*(?P<message>.+)'
+    regex = (
+        r'^(?P<filename>.+?):(?P<line>\d+):((?P<col>\d+):)?\s*'
+        r'(?P<error_type>[^:]+):\s*(?P<message>.+?)(\s\s\[(?P<code>.+)\])?$'
+    )
     line_col_base = (1, 1)
     tempfile_suffix = 'py'
     default_type = const.WARNING
@@ -63,6 +66,7 @@ class Mypy(PythonLinter):
         "--cache-dir:": "",
         # Allow users to disable this
         "--incremental": True,
+        "--show-error-codes": True,
         # Need this to silent lints for other files. Alternatively: 'skip'
         "--follow-imports:": "silent",
     }
