@@ -19,7 +19,6 @@ import tempfile
 import time
 import getpass
 
-from SublimeLinter.lint import const
 from SublimeLinter.lint import PythonLinter
 from SublimeLinter.lint.linter import PermanentError
 
@@ -55,7 +54,6 @@ class Mypy(PythonLinter):
     )
     line_col_base = (1, 1)
     tempfile_suffix = 'py'
-    default_type = const.WARNING
 
     # Pretty much all interesting options don't expect a value,
     # so you'll have to specify those in "args" anyway.
