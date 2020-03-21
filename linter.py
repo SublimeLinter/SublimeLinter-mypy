@@ -92,10 +92,9 @@ class Mypy(PythonLinter):
         else:
             cmd.append('${temp_file}')
 
-        # Add a temporary cache dir to the command if none was specified.
-        # Helps keep the environment clean
-        # by not littering everything with `.mypy_cache` folders.
-        if not self.settings.get('cache-dir'):
+        # Compare against `''` so the user can set just `False`,
+        # for example if the cache is configured in "mypy.ini".
+        if self.settings.get('cache-dir') == '':
             cwd = self.get_working_dir()
             if not cwd:  # abort silently
                 self.notify_unassign()
