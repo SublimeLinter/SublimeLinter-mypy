@@ -11,12 +11,14 @@
 
 """This module exports the Mypy plugin class."""
 
+from collections import defaultdict
 import hashlib
 import logging
 import os
 import shutil
 import tempfile
 import time
+import threading
 import getpass
 
 from SublimeLinter.lint import PythonLinter
@@ -25,7 +27,7 @@ from SublimeLinter.lint.linter import PermanentError
 
 MYPY = False
 if MYPY:
-    from typing import Dict, Protocol
+    from typing import Dict, DefaultDict, Optional, Protocol
 
     class TemporaryDirectory(Protocol):
         name = None  # type: str
@@ -43,6 +45,7 @@ try:
     tmpdirs
 except NameError:
     tmpdirs = {}  # type: Dict[str, TemporaryDirectory]
+locks = defaultdict(lambda: threading.Lock())  # type: DefaultDict[Optional[str], threading.Lock]
 
 
 class Mypy(PythonLinter):
@@ -113,6 +116,10 @@ class Mypy(PythonLinter):
                 self.settings.set('cache-dir', cache_dir)
 
         return cmd
+
+    def run(self, cmd, code):
+        with locks[self.get_working_dir()]:
+            return super().run(cmd, code)
 
 
 class FakeTemporaryDirectory:
