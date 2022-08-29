@@ -77,6 +77,7 @@ class Mypy(PythonLinter):
             '${args}',
             '--show-column-numbers',
             '--hide-error-context',
+            '--no-error-summary',
         ]
         if self.filename:
             cmd.extend([
