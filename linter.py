@@ -21,13 +21,13 @@ import time
 import threading
 import getpass
 
-from SublimeLinter.lint import PythonLinter
+from SublimeLinter.lint import LintMatch, PythonLinter
 from SublimeLinter.lint.linter import PermanentError
 
 
 MYPY = False
 if MYPY:
-    from typing import Dict, DefaultDict, Optional, Protocol
+    from typing import Dict, DefaultDict, Iterator, List, Optional, Protocol
 
     class TemporaryDirectory(Protocol):
         name = None  # type: str
@@ -120,6 +120,29 @@ class Mypy(PythonLinter):
     def run(self, cmd, code):
         with locks[self.get_working_dir()]:
             return super().run(cmd, code)
+
+    def find_errors(self, output):
+        # type: (str) -> Iterator[LintMatch]
+        errors = []  # type: List[LintMatch]
+        for error in super().find_errors(output):
+            # `"x" defined here` notes are unsorted and not helpful
+            # See: https://github.com/python/mypy/issues/10480
+            # Introduced: https://github.com/python/mypy/pull/926
+            if error.message.endswith(' defined here'):
+                continue
+
+            if error.error_type == 'note':
+                try:
+                    previous = errors[-1]
+                except IndexError:
+                    pass
+                else:
+                    if previous.line == error.line and previous.col == error.col:
+                        previous['message'] += '\n{}'.format(error.message)
+                        continue
+
+            errors.append(error)
+        yield from errors
 
 
 class FakeTemporaryDirectory:
