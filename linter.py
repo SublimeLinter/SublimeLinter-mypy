@@ -53,7 +53,7 @@ class Mypy(PythonLinter):
 
     regex = (
         r'^(?P<filename>.+?):(?P<line>\d+):((?P<col>\d+):)?\s*'
-        r'(?P<error_type>[^:]+):\s*(?P<message>.+?)(\s\s\[(?P<code>.+)\])?$'
+        r'(?P<error_type>[^:]+):\s(?P<message>.+?)(\s\s\[(?P<code>.+)\])?$'
     )
     line_col_base = (1, 1)
     tempfile_suffix = 'py'
