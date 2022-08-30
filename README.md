@@ -1,4 +1,4 @@
-SublimeLinter-contrib-mypy
+SublimeLinter-mypy
 ==========================
 
 [![tests](https://github.com/SublimeLinter/SublimeLinter-mypy/actions/workflows/ci.yml/badge.svg)](https://github.com/SublimeLinter/SublimeLinter-mypy/actions/workflows/ci.yml)
