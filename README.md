@@ -1,7 +1,8 @@
 SublimeLinter-contrib-mypy
 ==========================
 
-[![Build Status](https://travis-ci.org/fredcallaway/SublimeLinter-contrib-mypy.svg?branch=master)](https://travis-ci.org/fredcallaway/SublimeLinter-contrib-mypy)
+[![tests](https://github.com/SublimeLinter/SublimeLinter-mypy/actions/workflows/ci.yml/badge.svg)](https://github.com/SublimeLinter/SublimeLinter-mypy/actions/workflows/ci.yml)
+
 
 This linter plugin for [SublimeLinter][docs] provides an interface to [mypy](http://mypy-lang.org). It will be used with files that have the "python" syntax.
 
