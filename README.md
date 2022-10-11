@@ -34,7 +34,7 @@ To install via Package Control, do the following:
 
 1. Within Sublime Text, bring up the [Command Palette][cmd] (*Tools → Command Palette…*) and select `Package Control: Install Package`. There may be a pause of a few seconds while Package Control fetches the list of available packages.
 
-1. When the package list appears, select `SublimeLinter-contrib-mypy`.
+1. When the package list appears, select `SublimeLinter-mypy`.
 
 ## Settings
 For general information on how SublimeLinter works with settings, please see [Settings][settings]. For information on generic linter settings, please see [Linter Settings][linter-settings].
