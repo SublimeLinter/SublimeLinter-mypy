@@ -3,7 +3,6 @@ import unittest
 import re
 import importlib
 
-# Damn you dash separated module names!!!
 LinterModule = importlib.import_module('SublimeLinter-mypy.linter')
 Linter = LinterModule.Mypy
 regex = Linter.regex
