@@ -202,7 +202,7 @@ def plugin_unloaded():
     try:
         from package_control import events
 
-        if events.remove('SublimeLinter-contrib-mypy'):
+        if events.remove('SublimeLinter-mypy'):
             logger.info("Cleanup temporary directories.")
             _cleanup_tmpdirs()
 

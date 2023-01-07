@@ -1,5 +1,5 @@
-SublimeLinter-contrib-mypy
--------------------------------
+SublimeLinter-mypy
+------------------
 This linter plugin for SublimeLinter provides an interface to mypy.
 
 ** IMPORTANT! **
