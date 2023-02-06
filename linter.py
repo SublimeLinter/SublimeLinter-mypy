@@ -16,6 +16,7 @@ import hashlib
 import logging
 import os
 import shutil
+import re
 import tempfile
 import time
 import threading
@@ -26,7 +27,8 @@ from SublimeLinter.lint import LintMatch, PermanentError, PythonLinter
 
 MYPY = False
 if MYPY:
-    from typing import Dict, DefaultDict, Iterator, List, Optional, Protocol
+    from typing import Dict, DefaultDict, Iterator, List, Optional, Protocol, Tuple
+    from SublimeLinter.lint.linter import VirtualView
 
     class TemporaryDirectory(Protocol):
         name = None  # type: str
@@ -153,6 +155,31 @@ class Mypy(PythonLinter):
 
             errors.append(error)
         yield from errors
+
+    def reposition_match(self, line, col, m, vv):
+        # type: (int, Optional[int], LintMatch, VirtualView) -> Tuple[int, int, int]
+        message = m['message']
+        if message.startswith('Unused "type: ignore'):
+            text = vv.select_line(line)
+            # Search for the type comment on the actual line in the buffer
+            match = re.search(r"#\s*type:\s*ignore(\[.+])?", text)
+            if match:
+                # Probably select the whole type comment
+                a, b = match.span()
+                # When we have a specific rule in the error,
+                # e.g. 'Unused "type: ignore[import]" comment'
+                match = re.search(r"type:\s*ignore\[([^,]+)]", message)
+                if match:
+                    # Grab the rulename,
+                    rulename = match.group(1)
+                    try:
+                        # ... and find it in the type comment
+                        a = text[a:b].index(rulename) + a
+                        b = a + len(rulename)
+                    except ValueError:
+                        pass
+                return line, a, b
+        return super().reposition_match(line, col, m, vv)
 
 
 class FakeTemporaryDirectory:
