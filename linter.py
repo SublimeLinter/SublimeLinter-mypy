@@ -21,8 +21,7 @@ import time
 import threading
 import getpass
 
-from SublimeLinter.lint import LintMatch, PythonLinter
-from SublimeLinter.lint.linter import PermanentError
+from SublimeLinter.lint import LintMatch, PermanentError, PythonLinter
 
 
 MYPY = False
