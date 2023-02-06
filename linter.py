@@ -75,6 +75,7 @@ class Mypy(PythonLinter):
         cmd = [
             'mypy',
             '${args}',
+            '--no-pretty',
             '--show-column-numbers',
             '--hide-error-context',
             '--no-error-summary',
