@@ -21,8 +21,7 @@ import time
 import threading
 import getpass
 
-from SublimeLinter.lint import LintMatch, PythonLinter
-from SublimeLinter.lint.linter import PermanentError
+from SublimeLinter.lint import LintMatch, PermanentError, PythonLinter
 
 
 MYPY = False
@@ -52,7 +51,9 @@ class Mypy(PythonLinter):
     """Provides an interface to mypy."""
 
     regex = (
-        r'^(?P<filename>.+?):(?P<line>\d+):((?P<col>\d+):)?\s*'
+        r'^(?P<filename>.+?):'
+        r'(?P<line>\d+|-1):((?P<col>\d+|-1):)?'
+        r'((?P<end_line>\d+|-1):(?P<end_col>\d+|-1):)?\s*'
         r'(?P<error_type>[^:]+):\s(?P<message>.+?)(\s\s\[(?P<code>.+)\])?$'
     )
     line_col_base = (1, 1)
@@ -75,6 +76,7 @@ class Mypy(PythonLinter):
         cmd = [
             'mypy',
             '${args}',
+            '--no-pretty',
             '--show-column-numbers',
             '--hide-error-context',
             '--no-error-summary',
@@ -140,6 +142,14 @@ class Mypy(PythonLinter):
                     if previous.line == error.line and previous.col == error.col:
                         previous['message'] += '\n{}'.format(error.message)
                         continue
+
+            # mypy might report `-1` for unknown values.
+            # Only `line` is mandatory within SublimeLinter
+            if error.match.group('line') == "-1":  # type: ignore[attr-defined]
+                error['line'] = 0
+            for group in ('col', 'end_line', 'end_col'):
+                if error.match.group(group) == "-1":  # type: ignore[attr-defined]
+                    error[group] = None
 
             errors.append(error)
         yield from errors
