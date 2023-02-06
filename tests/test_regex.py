@@ -41,6 +41,22 @@ class TestRegex(unittest.TestCase):
                 'col': None,
                 'message': '"dict" is not subscriptable, use "typing.Dict" instead'})
 
+        self.assertMatch(
+            'codespell_lib\\tests\\test_basic.py:518:5:518:13: error: Module has no attribute "mkfifo"  [attr-defined]', {
+                'line': 517,
+                'col': 4,
+                'end_line': 517,
+                'end_col': 12,
+            })
+
+        self.assertMatch(
+            'codespell_lib\\tests\\test_basic.py:-1:-1:-1:-1: error: Module has no attribute "mkfifo"  [attr-defined]', {
+                'line': 0,
+                'col': None,
+                'end_line': None,
+                'end_col': None,
+            })
+
     def test_tmp_files_that_have_no_file_extension(self):
         self.assertMatch(
             '/tmp/yoeai32h2:6:1: error: Cannot find module named \'PackageName.lib\'', {
