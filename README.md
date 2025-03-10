@@ -46,6 +46,7 @@ Following is a list of *additional* settings specific to this linter:
 |cache-dir|The directory to store the cache in. Creates a sub-folder in your temporary directory if not specified. Set it to `false` to disable this automatic behavior, for example if the cache location is set in your mypy.ini file.|
 |follow-imports|Whether imports should be followed and linted. The default is `"silent"` for speed, but `"normal"` or `"skip"` may also be used.|
 |show-error-codes|Set to `false` for older mypy versions, or better yet update mypy.|
+|set-python-executable-inside-venv|Sets `--python-executable` if `VIRTUAL_ENV` is set as an environment variable.  (Default: true)
 
 All other args to mypy should be specified in the `args` list directly.
 
