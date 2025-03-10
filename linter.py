@@ -22,6 +22,7 @@ import time
 import threading
 import getpass
 
+import sublime
 from SublimeLinter.lint import LintMatch, PermanentError, PythonLinter
 
 
@@ -33,7 +34,8 @@ if MYPY:
     class TemporaryDirectory(Protocol):
         name = None  # type: str
 
-
+POSIX = sublime.platform() in ('osx', 'linux')
+BIN = 'bin' if POSIX else 'Scripts'
 USER = getpass.getuser()
 TMPDIR_PREFIX = "SublimeLinter-contrib-mypy-%s" % USER
 
@@ -71,6 +73,8 @@ class Mypy(PythonLinter):
         "--show-error-codes": True,
         # Need this to silent lints for other files. Alternatively: 'skip'
         "--follow-imports": "silent",
+        # Automatically set "--python-executable" if `VIRTUAL_ENV` is set
+        "set-python-executable-inside-venv": True,
     }
 
     def cmd(self):
@@ -122,6 +126,16 @@ class Mypy(PythonLinter):
         return cmd
 
     def run(self, cmd, code):
+        if (
+            self.settings.get("set-python-executable-inside-venv")
+            and (venv := self.get_environment().get("VIRTUAL_ENV"))
+            and not cmd[0].startswith(venv)
+            and not any(part.startswith("--python-executable") for part in cmd)
+            and (py_executable := shutil.which("python", path=os.path.join(venv, BIN)))
+        ):
+            idx = cmd.index("--no-pretty")
+            cmd = cmd[:idx] + ["--python-executable", py_executable] + cmd[idx:]
+
         with locks[self.get_working_dir()]:
             return super().run(cmd, code)
 
