@@ -61,6 +61,7 @@ class Mypy(PythonLinter):
         r'(?P<error_type>[^:]+):\s(?P<message>.+?)(\s\s\[(?P<code>.+)\])?$'
     )
     line_col_base = (1, 1)
+    column_unit = 'utf8'
     tempfile_suffix = 'py'
 
     # Pretty much all interesting options don't expect a value,
@@ -169,6 +170,13 @@ class Mypy(PythonLinter):
 
             errors.append(error)
         yield from errors
+
+    def convert_column(self, line, col, m, vv):
+        if m.code == 'syntax':
+            # mypy 2.3.1 passes SyntaxError.offset (one-based code points)
+            # to its zero-based reporter, which adds another one.
+            return col - 1
+        return super().convert_column(line, col, m, vv)
 
     def reposition_match(self, line, col, m, vv):
         # type: (int, Optional[int], LintMatch, VirtualView) -> Tuple[int, int, int]

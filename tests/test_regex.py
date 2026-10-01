@@ -131,7 +131,7 @@ class TestRegex(unittest.TestCase, metaclass=TestRegexMeta):
 
     def assertMatch(self, string, expected):
         """Assert that a string matches an expected pattern."""
-        assert isinstance(self.Linter, BaseLinter)
+        assert isinstance(self.Linter, type) and issubclass(self.Linter, BaseLinter)
         linter = self.Linter(sublime.View(0), {})
         actual = list(linter.find_errors(string))[0]
         # `find_errors` fills out more information we don't want to write down
@@ -140,7 +140,7 @@ class TestRegex(unittest.TestCase, metaclass=TestRegexMeta):
 
     def assertNoMatch(self, string):
         """Assert that a string doesn't match any pattern."""
-        assert isinstance(self.Linter, BaseLinter)
+        assert isinstance(self.Linter, type) and issubclass(self.Linter, BaseLinter)
         linter = self.Linter(sublime.View(0), {})
         actual = list(linter.find_errors(string))
         self.assertFalse(actual)
